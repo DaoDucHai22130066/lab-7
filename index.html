@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký thẻ thành viên</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" >Trang chủ</a>
+            <a href="#">Ưu đãi</a>
+            <div class="dropdown">
+                <button class="dropbtn">Khác
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#service">Service</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <a href="login.html" target="_blank">Đăng nhập</a>
+            <a href="login.html" target="_blank"q>Đăng ký</a>
+        </nav>        
+    </header>
+
+    <main>
+        <div class="guided-action" id="step1">
+            <div class="container">
+                <h2>Đăng Ký Thẻ Thành Viên</h2>
+                <label for="fullName">Họ và Tên:</label>
+                <input type="text" id="fullName" name="fullName" required>
+            
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" name="password" required>
+            
+                <label for="confirmPassword">Xác nhận Mật khẩu:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+                <label for="password">Chọn quốc tịch:</label>
+                <select id="countrySelect">
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="VietNam">Việt Nam</option>
+                    <option value="UK">UK</option>
+                </select>
+                <button class="action-button" onclick="nextStep('step2')">Next</button>
+            </div> 
+        </div>
+
+        <div class="guided-action" id="step2" style="display: none;">
+            <div class="container">
+                <label for="bank">Liên kết tài khoản:
+                    <select id="bankSelect">
+                        <option value="Vietcombank">Vietcombank</option>
+                        <option value="MBbank">MBbank</option>
+                        <option value="Momo">Momo</option>
+                        <option value="Kplus">K plus</option>
+                    </select>
+                </label>
+
+                <label for="card">Chọn Loại thẻ:</label>
+
+                <div class="radio-group">
+                    <label for="radio1"> Thẻ Thường
+                        <input type="radio" id="radio1" name="radio-group" checked>
+                        <img src="img/normal.webp" alt="Option 1 Image">
+                    </label>
+
+                    <label for="radio2">Thẻ VIP
+                        <input type="radio" id="radio2" name="radio-group">
+                        <img src="img/vip.webp" alt="Option 2 Image">
+                    </label>
+                </div>
+
+                <button class="action-button" onclick="nextStep('step1')">Back</button>
+                <button class="action-button" onclick="nextStep('step3')">Next</button>
+            </div>
+        </div>
+
+        <div class="guided-action" id="step3" style="display: none;">
+            <div class="container">
+                <h2>Xác Nhận Thông Tin</h2>
+        
+                <p>Họ và Tên: <span id="confirmFullName"></span></p>
+                <p>Email: <span id="confirmEmail"></span></p>
+                <p>Mật khẩu: *********</p>
+                <p>Quốc tịch:<span id="confirmNationality"></span></p>
+                <p><strong>Tài khoản ngân hàng:</strong> <span id="confirmBank"></span></p>
+        
+                <button class="action-button" onclick="nextStep('step2')">Back</button>
+                <button class="action-button" onclick="nextStep('step4')">Submit</button>
+            </div>
+        </div>
+        <div class="guided-action" id="step4" style="display: none;">
+            <div class="container">
+                <div class="step4-text">
+                    <h1>
+                        CHÚC MỪNG BẠN ĐÃ TRỞ THÀNH HỘI VIÊN CỦA CHÚNG TÔI
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="guided-action">
+            <div class="container">
+                <h2>BIỂU MẪU</h2>
+                <form action="#" method="post">
+                    <label for="name">Họ và tên:</label>
+                    <input type="text" id="name" name="name" required>
+            
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+            
+                    <label for="message">Nội dung:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+            
+                    <button class="action-button">Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function nextStep(step) {
+            // Ẩn hiện các bước
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step4').style.display = 'none';
+    
+            // Hiển thị bước tiếp theo
+            document.getElementById(step).style.display = 'block';
+    
+            // Cập nhật thông tin từ step 1 và 2 vào step 3
+            if (step === 'step3') {
+                document.getElementById('confirmFullName').innerText = document.getElementById('fullName').value;
+                document.getElementById('confirmEmail').innerText = document.getElementById('email').value;
+                document.getElementById('confirmNationality').innerText = document.getElementById('countrySelect').value;
+                document.getElementById('confirmBank').innerText = document.getElementById('bankSelect').value;
+    
+                // Lấy giá trị của radio button được chọn
+                var cardTypeRadios = document.getElementsByName('card-type');
+                for (var i = 0; i < cardTypeRadios.length; i++) {
+                    if (cardTypeRadios[i].checked) {
+                        document.getElementById('confirmCardType').innerText = cardTypeRadios[i].nextElementSibling.textContent.trim();
+                    }
+                }
+            }
+        }
+    </script>
+    
+  </body>
+</html>
